@@ -41,7 +41,4 @@
             </plugin>
         </plugins>
     </build>
-    <scm>
-        <developerConnection>scm:git:git@github.com:akmal2409/sf-pet-clinic.git</developerConnection>
-    </scm>
 </project>
