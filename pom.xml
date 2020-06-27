@@ -42,8 +42,4 @@
             </plugin>
         </plugins>
     </build>
-
-  <scm>
-    <tag>sf-pet-clinic-0.0.4</tag>
-  </scm>
 </project>
