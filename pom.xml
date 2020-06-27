@@ -18,7 +18,7 @@
 
     <groupId>com.akmal</groupId>
     <artifactId>sf-pet-clinic</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <name>sf-pet-clinic</name>
     <description>SF Pet Clinic project</description>
 
@@ -42,4 +42,8 @@
             </plugin>
         </plugins>
     </build>
+
+  <scm>
+    <tag>sf-pet-clinic-0.0.4</tag>
+  </scm>
 </project>
