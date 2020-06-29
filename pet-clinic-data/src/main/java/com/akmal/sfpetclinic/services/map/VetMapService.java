@@ -1,12 +1,12 @@
 package com.akmal.sfpetclinic.services.map;
 
 import com.akmal.sfpetclinic.model.Vet;
-import com.akmal.sfpetclinic.services.CrudService;
-import com.akmal.sfpetclinic.services.PetService;
 import com.akmal.sfpetclinic.services.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
