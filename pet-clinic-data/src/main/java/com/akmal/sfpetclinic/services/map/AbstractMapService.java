@@ -4,43 +4,43 @@ import com.akmal.sfpetclinic.model.BaseEntity;
 
 import java.util.*;
 
-public abstract class AbstractMapService<T extends BaseEntity, ID extends Long>{
+public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
     protected Map<Long, T> map = new HashMap<>();
 
-    Set<T> findAll(){
+    Set<T> findAll() {
         return new HashSet<>(map.values());
     }
 
-    T findById(ID id){
+    T findById(ID id) {
         return map.get(id);
     }
 
-    T save(T object){
+    T save(T object) {
 
-        if(object != null){
-            if(object.getId() == null){
+        if (object != null) {
+            if (object.getId() == null) {
                 object.setId(getNextId());
             }
             map.put(object.getId(), object);
-        } else{
+        } else {
             throw new RuntimeException("Object cannot be null!");
         }
         return object;
     }
 
-    void deleteById(ID id){
+    void deleteById(ID id) {
         map.remove(id);
     }
 
-    void delete(T object){
+    void delete(T object) {
         map.entrySet().removeIf(entry -> entry.getValue().equals(object));
     }
 
-    private Long getNextId(){
+    private Long getNextId() {
         Long nextId = null;
-        try{
+        try {
             nextId = Collections.max(map.keySet()) + 1;
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             nextId = 1L;
         }
         return nextId;
