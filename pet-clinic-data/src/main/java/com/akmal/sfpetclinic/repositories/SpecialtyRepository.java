@@ -1,7 +1,7 @@
 package com.akmal.sfpetclinic.repositories;
 
 import com.akmal.sfpetclinic.model.Specialty;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SpecialtyRepository extends CrudRepository<Specialty, Long> {
+public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
 }
