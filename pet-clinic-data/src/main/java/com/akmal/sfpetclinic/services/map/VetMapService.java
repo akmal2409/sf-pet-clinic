@@ -5,12 +5,13 @@ import com.akmal.sfpetclinic.model.Vet;
 import com.akmal.sfpetclinic.services.SpecialtyService;
 import com.akmal.sfpetclinic.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
     private final SpecialtyService specialtyService;
 
