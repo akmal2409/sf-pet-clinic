@@ -44,7 +44,6 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
-            <plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
@@ -58,6 +57,7 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <!--Note your version numbe might be different-->
                 <version>2.22.0</version>
