@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.test.web.servlet.MockMvcBuilder;
@@ -74,13 +75,30 @@ class OwnerControllerTest {
     }
 
     @Test
-    void findOwners() throws Exception{
+    void testGetFindOwnersForm() throws Exception{
+        //then
+        mockMvc.perform(get("/owners/find"))
+                .andExpect(model().attributeExists("owner"))
+                .andExpect(view().name("owners/findOwners"))
+                .andExpect(status().isOk());
+    }
 
-        mockMvc.perform(org.springframework.test.web.servlet.request
-                .MockMvcRequestBuilders.get("/owners/find"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("notimplemented"));
-        verifyNoInteractions(ownerService);
+    @Test
+    void testPostFindOwner() throws Exception{
+        //given
+        Owner owner = new Owner();
+        owner.setId(2L);
+
+        //when
+        when(ownerService.findByLastName(anyString())).thenReturn(owner);
+
+        //then
+        mockMvc.perform(post("/owners/find")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("lastName", "da"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().attributeExists("owner"))
+                .andExpect(view().name("redirect:/owners/2"));
     }
 
     @Test
