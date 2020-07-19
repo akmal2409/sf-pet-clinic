@@ -14,9 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,21 +82,44 @@ class OwnerControllerTest {
     }
 
     @Test
-    void testPostFindOwner() throws Exception{
+    void testProcessFindFormMany() throws Exception{
+        //given
+        Owner owner1 = new Owner();
+        Owner owner2 = new Owner();
+        owner1.setId(1L);
+        owner2.setId(2l);
+        List<Owner> ownerSet = new ArrayList<>();
+        ownerSet.add(owner1);
+        ownerSet.add(owner2);
+
+        //when
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(ownerSet);
+
+        //then
+        mockMvc.perform(get("/owners"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("owners"))
+                .andExpect(view().name("owners/ownersList"));
+        verify(ownerService, times(1)).findAllByLastNameLike(anyString());
+    }
+
+    @Test
+    void processFindFormOne() throws Exception{
         //given
         Owner owner = new Owner();
         owner.setId(2L);
+        List<Owner> ownerList = new ArrayList<>();
+        ownerList.add(owner);
 
         //when
-        when(ownerService.findByLastName(anyString())).thenReturn(owner);
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(ownerList);
 
         //then
-        mockMvc.perform(post("/owners/find")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("lastName", "da"))
+        mockMvc.perform(get("/owners"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(model().attributeExists("owner"))
                 .andExpect(view().name("redirect:/owners/2"));
+
+        verify(ownerService, times(1)).findAllByLastNameLike(anyString());
     }
 
     @Test

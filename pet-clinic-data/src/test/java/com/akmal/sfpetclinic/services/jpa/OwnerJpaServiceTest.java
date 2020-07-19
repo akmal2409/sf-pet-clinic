@@ -8,6 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -42,5 +45,27 @@ class OwnerJpaServiceTest {
         assertEquals(lastName, smith.getLastName());
         assertEquals(id, smith.getId());
         verify(ownerRepository, times(1)).findByLastName(any());
+    }
+
+    @Test
+    void findAllByLastNameLike() {
+        //given
+        Owner owner1 = new Owner();
+        Owner owner2 = new Owner();
+
+        owner1.setId(2L);
+        owner2.setId(1L);
+
+        List<Owner> owners = new ArrayList<>();
+        owners.add(owner1);
+        owners.add(owner2);
+
+        //when
+        when(ownerRepository.findAllByLastNameLike(anyString())).thenReturn(owners);
+
+        //then
+        List<Owner> returnedOwners = ownerService.findAllByLastNameLike("test");
+        assertEquals(2, returnedOwners.size());
+        verify(ownerRepository, times(1)).findAllByLastNameLike(anyString());
     }
 }
