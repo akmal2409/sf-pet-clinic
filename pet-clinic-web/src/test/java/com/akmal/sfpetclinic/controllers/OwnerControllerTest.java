@@ -49,7 +49,7 @@ class OwnerControllerTest {
                 .standaloneSetup(controller)
                 .build();
     }
-
+    /*     Removed feature
     @Test
     void listOwners() throws Exception{
         when(ownerService.findAll()).thenReturn(owners);
@@ -72,6 +72,7 @@ class OwnerControllerTest {
                 .andExpect(model().attribute("owners", hasSize(2)));
     }
 
+     */
     @Test
     void testGetFindOwnersForm() throws Exception{
         //then
