@@ -3,6 +3,7 @@ package com.akmal.sfpetclinic.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class Owner extends Person {
 
 
     @Column(name = "address")
+    @NotBlank(message = "Address must not be blank!")
     private String address;
 
     @Column(name = "city")
@@ -29,3 +31,4 @@ public class Owner extends Person {
     private Set<Pet> pets = new HashSet<>();
 
 }
+
