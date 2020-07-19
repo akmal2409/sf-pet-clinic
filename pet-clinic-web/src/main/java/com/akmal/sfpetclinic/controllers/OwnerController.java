@@ -41,6 +41,16 @@ public class OwnerController {
         return "owners/findOwners";
     }
 
+    @PostMapping("/find")
+    public String findOwnersPost(@ModelAttribute Owner owner, Model model){
+
+        Owner foundOwner = ownerService.findByLastName(owner.getLastName());
+
+        model.addAttribute("owner", foundOwner);
+
+        return "redirect:/owners/" + foundOwner.getId();
+    }
+
     @GetMapping("/{ownerId}")
     public ModelAndView showOwner(@PathVariable("ownerId") Long ownerId){
 
