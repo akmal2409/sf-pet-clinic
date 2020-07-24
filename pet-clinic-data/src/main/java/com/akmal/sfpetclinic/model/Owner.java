@@ -3,7 +3,7 @@ package com.akmal.sfpetclinic.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,13 +18,15 @@ public class Owner extends Person {
 
 
     @Column(name = "address")
-    @NotBlank(message = "Address must not be blank!")
+    @NotEmpty
     private String address;
 
     @Column(name = "city")
+    @NotEmpty
     private String city;
 
     @Column(name = "telephone")
+    @NotEmpty
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")

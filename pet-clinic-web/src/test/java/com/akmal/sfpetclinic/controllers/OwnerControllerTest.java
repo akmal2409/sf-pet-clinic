@@ -122,7 +122,7 @@ class OwnerControllerTest {
     @Test
     void testInitCreationForm() throws Exception{
 
-        mockMvc.perform(get("owners/new"))
+        mockMvc.perform(get("/owners/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/createOrUpdateOwnerForm"))
                 .andExpect(model().attributeExists("owner"));
@@ -131,17 +131,27 @@ class OwnerControllerTest {
     @Test
     void processCreatingForm() throws Exception{
         //given
-        Owner testOwner = new Owner();
-        testOwner.setId(1L);
+        Owner returnedOwner = new Owner();
+        returnedOwner.setId(1L);
+        returnedOwner.setLastName("Test");
+        returnedOwner.setFirstName("Test");
+        returnedOwner.setAddress("Test");
+        returnedOwner.setTelephone("test");
+        returnedOwner.setCity("Test city");
 
         //when
-        when(ownerService.save(any())).thenReturn(testOwner);
+        when(ownerService.save(any())).thenReturn(returnedOwner);
 
         //then
-        mockMvc.perform(post("/owners/new"))
+        mockMvc.perform(post("/owners/new")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("firstName", "test")
+                .param("lastName", "test")
+                .param("address", "test")
+                .param("city", "test")
+                .param("telephone", "test"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/owners/1"))
-                .andExpect(model().attributeExists("owner"));
+                .andExpect(view().name("redirect:/owners/1"));
 
         verify(ownerService, times(1)).save(any());
     }
@@ -174,7 +184,13 @@ class OwnerControllerTest {
         when(ownerService.save(any())).thenReturn(testOwner);
 
         //then
-        mockMvc.perform(post("/owners/1/edit"))
+        mockMvc.perform(post("/owners/1/edit")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("firstName", "test")
+                .param("lastName", "test")
+                .param("address", "test")
+                .param("city", "test")
+                .param("telephone", "test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().attributeExists("owner"))
                 .andExpect(view().name("redirect:/owners/1"));
