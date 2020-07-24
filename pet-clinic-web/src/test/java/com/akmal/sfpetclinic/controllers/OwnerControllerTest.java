@@ -49,30 +49,7 @@ class OwnerControllerTest {
                 .standaloneSetup(controller)
                 .build();
     }
-    /*     Removed feature
-    @Test
-    void listOwners() throws Exception{
-        when(ownerService.findAll()).thenReturn(owners);
 
-        mockMvc.perform(org.springframework.test.web.servlet.request
-                .MockMvcRequestBuilders.get("/owners/index"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("owners/index"))
-                .andExpect(model().attribute("owners", hasSize(2)));
-    }
-
-    @Test
-    void listOwnersByIndex() throws Exception{
-        when(ownerService.findAll()).thenReturn(owners);
-
-        mockMvc.perform(org.springframework.test.web.servlet.request
-                .MockMvcRequestBuilders.get("/owners/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("owners/index"))
-                .andExpect(model().attribute("owners", hasSize(2)));
-    }
-
-     */
     @Test
     void testGetFindOwnersForm() throws Exception{
         //then
@@ -121,6 +98,7 @@ class OwnerControllerTest {
                 .andExpect(view().name("redirect:/owners/2"));
 
         verify(ownerService, times(1)).findAllByLastNameLike(anyString());
+
     }
 
     @Test
@@ -142,7 +120,71 @@ class OwnerControllerTest {
     }
 
     @Test
-    void testEmptyFindOwnerLastName() throws Exception{
+    void testInitCreationForm() throws Exception{
+
+        mockMvc.perform(get("owners/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/createOrUpdateOwnerForm"))
+                .andExpect(model().attributeExists("owner"));
+    }
+
+    @Test
+    void processCreatingForm() throws Exception{
+        //given
+        Owner testOwner = new Owner();
+        testOwner.setId(1L);
+
+        //when
+        when(ownerService.save(any())).thenReturn(testOwner);
+
+        //then
+        mockMvc.perform(post("/owners/new"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/owners/1"))
+                .andExpect(model().attributeExists("owner"));
+
+        verify(ownerService, times(1)).save(any());
+    }
+
+    @Test
+    void testUpdateOwnerForm() throws Exception{
+        //given
+        Owner testOwner = new Owner();
+        testOwner.setId(2L);
+
+        //when
+        when(ownerService.findById(anyLong())).thenReturn(testOwner);
+
+        //then
+        mockMvc.perform(get("/owners/2/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/createOrUpdateOwnerForm"))
+                .andExpect(model().attributeExists("owner"));
+
+        verify(ownerService, times(1)).findById(anyLong());
+    }
+
+    @Test
+    void testProcessUpdateForm() throws Exception{
+        //given
+        Owner testOwner = new Owner();
+        testOwner.setId(1L);
+
+        //when
+        when(ownerService.save(any())).thenReturn(testOwner);
+
+        //then
+        mockMvc.perform(post("/owners/1/edit"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().attributeExists("owner"))
+                .andExpect(view().name("redirect:/owners/1"));
+
+        verify(ownerService, times(1)).save(any());
+    }
+
+    /*
+    @Test
+    void testEmptyLastNameFindOwner() throws Exception{
         //then
         mockMvc.perform(get("/owners")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -153,4 +195,5 @@ class OwnerControllerTest {
 
         verify(ownerService, times(1)).findAll();
     }
+     */
 }

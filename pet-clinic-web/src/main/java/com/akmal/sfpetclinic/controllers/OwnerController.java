@@ -41,9 +41,19 @@ public class OwnerController {
     @GetMapping
     public String processOwnerForm(Owner owner, BindingResult result, Model model){
 
+        // if person sends empty last name then list of all owners will be displayed
         if(owner.getLastName() == null){
+
             owner.setLastName("");
         }
+
+        /*
+        if(owner.getLastName().isEmpty()){
+            model.addAttribute("owners", ownerService.findAll());
+
+            return "owners/ownersList";
+        }
+         */
 
         List<Owner> results = ownerService.findAllByLastNameLike("%" + owner.getLastName() + "%");
 

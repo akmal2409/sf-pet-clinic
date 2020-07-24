@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -90,6 +91,24 @@ public class DataLoader implements CommandLineRunner {
         owner2.getPets().add(fionasCat);
 
         ownerService.save(owner2);
+
+        Owner owner3 = new Owner();
+        owner3.setId(4L);
+        owner3.setLastName("Weston");
+        owner3.setFirstName("Abraham");
+        owner3.setAddress("Ljubljanska cesta 56");
+        owner3.setCity("Ljubljana");
+        owner3.setTelephone("+3867687989");
+
+        Pet abrahamsDog = new Pet();
+        abrahamsDog.setId(6L);
+        abrahamsDog.setOwner(owner3);
+        abrahamsDog.setBirthDate(LocalDate.now());
+        abrahamsDog.setPetType(savedDogPetType);
+        abrahamsDog.setName("Just doggy");
+        owner3.getPets().add(abrahamsDog);
+
+        ownerService.save(owner3);
 
         Visit catVisit = new Visit();
         catVisit.setPet(fionasCat);
