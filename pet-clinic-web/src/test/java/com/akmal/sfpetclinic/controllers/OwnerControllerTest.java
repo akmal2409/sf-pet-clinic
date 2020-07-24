@@ -140,4 +140,17 @@ class OwnerControllerTest {
 
         verify(ownerService, times(1)).findById(anyLong());
     }
+
+    @Test
+    void testEmptyFindOwnerLastName() throws Exception{
+        //then
+        mockMvc.perform(get("/owners")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("lastName", ""))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("owners"))
+                .andExpect(view().name("owners/ownersList"));
+
+        verify(ownerService, times(1)).findAll();
+    }
 }
