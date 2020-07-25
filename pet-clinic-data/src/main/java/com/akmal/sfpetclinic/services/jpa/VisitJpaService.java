@@ -1,5 +1,6 @@
 package com.akmal.sfpetclinic.services.jpa;
 
+import com.akmal.sfpetclinic.model.Owner;
 import com.akmal.sfpetclinic.model.Visit;
 import com.akmal.sfpetclinic.repositories.VisitRepository;
 import com.akmal.sfpetclinic.services.VisitService;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Set;
 
 @Service
 @Profile("jpa")
@@ -17,5 +19,6 @@ public class VisitJpaService extends AbstractJpaService<Visit, VisitRepository>
     public VisitJpaService(VisitRepository repository) {
         super(repository);
     }
+
 
 }

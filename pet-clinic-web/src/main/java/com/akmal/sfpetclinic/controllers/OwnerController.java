@@ -1,7 +1,10 @@
 package com.akmal.sfpetclinic.controllers;
 
 import com.akmal.sfpetclinic.model.Owner;
+import com.akmal.sfpetclinic.model.Visit;
 import com.akmal.sfpetclinic.services.OwnerService;
+import com.akmal.sfpetclinic.services.PetService;
+import com.akmal.sfpetclinic.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +24,11 @@ import java.util.Set;
 public class OwnerController {
 
     private final OwnerService ownerService;
+    private final PetService petService;
 
-    @Autowired
-    public OwnerController(OwnerService ownerService) {
+    public OwnerController(OwnerService ownerService, PetService petService) {
         this.ownerService = ownerService;
+        this.petService = petService;
     }
 
     @InitBinder
