@@ -47,7 +47,7 @@ public class VisitController {
     }
 
     @GetMapping("/visits/new")
-    public String createVisitForm(){
+    public String createVisitForm(@PathVariable Long petId, Model model){
 
         return "pets/createOrUpdateVisitForm";
     }
